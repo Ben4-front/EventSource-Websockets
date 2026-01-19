@@ -4,6 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   target: 'web',
+  mode: 'development', 
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '',
@@ -18,14 +19,7 @@ module.exports = {
           loader: 'babel-loader',
         },
       },
-      {
-        test: /\.html$/,
-        use: [
-          {
-            loader: 'html-loader',
-          },
-        ],
-      },
+
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
