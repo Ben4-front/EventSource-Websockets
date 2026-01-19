@@ -1,0 +1,37 @@
+{
+  "devDependencies": {
+    "@babel/core": "^7.28.6",
+    "@babel/preset-env": "^7.28.6",
+    "babel-loader": "^10.0.0",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^7.1.2",
+    "html-webpack-plugin": "^5.6.6",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.104.1",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.3"
+  },
+  "dependencies": {
+    "core-js": "^3.47.0"
+  },
+  "name": "eventsource-websockets",
+  "version": "1.0.0",
+  "description": "Домашнее задание к занятию \"8. EventSource, Websockets\"\r Правила сдачи задания:",
+  "main": "webpack.config.js",
+  "scripts": {
+      "start": "webpack serve --mode development",
+      "build": "webpack --mode production",
+      "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ben4-front/EventSource-Websockets.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ben4-front/EventSource-Websockets/issues"
+  },
+  "homepage": "https://github.com/Ben4-front/EventSource-Websockets#readme"
+}
