@@ -1,4 +1,6 @@
 Домашнее задание к занятию "8. EventSource, Websockets"
+Ссылка на проект: https://github.com/Ben4-front/EventSource-Websockets/
+[![Build and Deploy](https://github.com/Ben4-front/EventSource-Websockets/actions/workflows/web.yml/badge.svg)](https://github.com/Ben4-front/EventSource-Websockets/actions/workflows/web.yml)
 Правила сдачи задания:
 
 Важно: в рамках этого ДЗ можно использовать любой менеджер пакетов
