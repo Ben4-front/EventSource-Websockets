@@ -4,7 +4,7 @@ export default class Chat {
   constructor(container) {
     this.container = container;
 
-    this.baseUrl = 'https://helpdesk-backend-23ri.onrender.com';
+    this.baseUrl = 'https://chat-backend-cbgz.onrender.com';
     this.api = new ChatAPI(this.baseUrl);
     
     this.user = null;
