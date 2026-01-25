@@ -14,7 +14,7 @@ export default class Chat {
     this.registerEvents();
   }
 
-  bindToDOM() {
+bindToDOM() {
     this.modal = document.querySelector('#modal');
     this.loginForm = document.querySelector('#login-form');
     this.modalError = document.querySelector('.modal__error');
@@ -68,9 +68,11 @@ export default class Chat {
   }
 
   connectWebSocket() {
-
-    const wsUrl = this.baseUrl.replace('http', 'ws');
-    this.ws = new WebSocket(`${wsUrl}/ws`);
+    
+    const wsUrl = new URL(this.baseUrl);
+    wsUrl.protocol = wsUrl.protocol === 'https:' ? 'wss:' : 'ws:';
+    
+    this.ws = new WebSocket(`${wsUrl.origin}/ws`);
 
     this.ws.addEventListener('open', () => {
       console.log('Connected to WS');
@@ -80,19 +82,15 @@ export default class Chat {
       const data = JSON.parse(e.data);
       console.log('Received:', data);
 
-      
       if (Array.isArray(data)) {
         this.renderUsers(data);
-      } 
-
-      else if (data.type === 'send') {
+      } else if (data.type === 'send') {
         this.renderMessage(data);
       }
     });
 
     this.ws.addEventListener('close', (e) => {
       console.log('Disconnected', e);
-
     });
 
     this.ws.addEventListener('error', (e) => {
@@ -105,37 +103,51 @@ export default class Chat {
     
     users.forEach(user => {
       const isCurrentUser = user.name === this.user.name;
+      
+      
       const userEl = document.createElement('div');
       userEl.className = 'user-item';
+
+      const avatar = document.createElement('div');
+      avatar.className = 'user-avatar';
+
+      const nameEl = document.createElement('div');
+      nameEl.className = `user-name ${isCurrentUser ? 'user-me' : ''}`;
+
+      nameEl.textContent = `${user.name} ${isCurrentUser ? '(You)' : ''}`;
+
+      userEl.appendChild(avatar);
+      userEl.appendChild(nameEl);
       
-      userEl.innerHTML = `
-        <div class="user-avatar"></div>
-        <div class="user-name ${isCurrentUser ? 'user-me' : ''}">
-           ${user.name} ${isCurrentUser ? '(You)' : ''}
-        </div>
-      `;
       this.usersList.appendChild(userEl);
     });
   }
 
   renderMessage(data) {
-    const { user, message, created } = data; 
+    const { user, message } = data;
     const isSelf = user.name === this.user.name;
     
     const msgEl = document.createElement('div');
     msgEl.className = `message-container ${isSelf ? 'message__self' : 'message__income'}`;
     
-
     const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-    msgEl.innerHTML = `
-      <div class="message-meta">${isSelf ? 'You' : user.name}, ${time}</div>
-      <div class="message-text">${message}</div>
-    `;
-
-    this.messagesArea.appendChild(msgEl);
+    
     
 
+    const meta = document.createElement('div');
+    meta.className = 'message-meta';
+    meta.textContent = `${isSelf ? 'You' : user.name}, ${time}`;
+
+
+    const text = document.createElement('div');
+    text.className = 'message-text';
+    text.textContent = message; 
+
+
+    msgEl.append(meta, text);
+
+    this.messagesArea.appendChild(msgEl);
     this.messagesArea.scrollTop = this.messagesArea.scrollHeight;
   }
 }
